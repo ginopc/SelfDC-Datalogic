@@ -15,7 +15,6 @@ namespace SelfDC
     public partial class MainForm : Form
     {
         bool ItemEdit = false;
-        private List<OrderItem> listaProdotti;
         private Settings appSettings;
         // private string appFileName = string.Format("{0}\\conf.txt", Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase));
         private string appFileName = string.Format("{0}\\conf.txt", Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase));
@@ -27,8 +26,6 @@ namespace SelfDC
             txtCode.Text = "";
             txtQta.Text = "";
             listBox.Items.Clear();
-
-            listaProdotti = new List<OrderItem>();
         }
 
         /** Caricamento della maschera */
@@ -40,6 +37,12 @@ namespace SelfDC
 
             // Imposto la maschera a tutto schermo
             this.WindowState = FormWindowState.Maximized;
+
+            // 
+            // laser1
+            // 
+            this.bcReader.ScannerEnabled = true;
+            this.statusBar.Text = this.Text;
         }
 
         /** modifica l'elemento selezionato */
@@ -72,7 +75,7 @@ namespace SelfDC
             txtCode.Enabled = true;
             txtQta.Text = "";
             txtQta.Enabled = true;
-            cbCodInterno.Checked = false;
+            cbCodInterno.Checked = true;
             cbCodInterno.Enabled = true;
             btnSave.Enabled = true;
 
@@ -108,9 +111,9 @@ namespace SelfDC
 
             /** Resize listBox */
             listBox.Width = (int) ctlWidth;
-            listBox.Columns[0].Width = (int) (ctlWidth * 0.50);
-            listBox.Columns[1].Width = (int) (ctlWidth * 0.30);
-            listBox.Columns[1].Width = (int) (ctlWidth * 0.20);
+            listBox.Columns[1].Width = 60;
+            listBox.Columns[2].Width = 45;
+            listBox.Columns[0].Width = (int)(ctlWidth - 120);
         }
 
         private void actQuit(object sender, EventArgs e)
@@ -280,7 +283,7 @@ namespace SelfDC
         {
             txtCode.Text = "";
             txtQta.Text = "";
-            cbCodInterno.Checked = false;
+            cbCodInterno.Checked = true;
             btnSave.Enabled = false;
             // panEdit.Visible = false;
         }
@@ -316,6 +319,8 @@ namespace SelfDC
 
             // TODO: se esiste un ordine in fase di compilazione lo esporto su un file temporaneo
 
+            // Disabilito lo scanner
+            bcReader.ScannerEnabled = false;
         }
 
         private void txtQta_KeyPress(object sender, KeyPressEventArgs e)
@@ -364,6 +369,63 @@ namespace SelfDC
             sw.Close();
 
             return result;
+        }
+
+        // Attivata alla lettura di un codice tramite il lettore laser
+        private void OnBarcodeScan(datalogic.datacapture.ScannerEngine sender)
+        {
+            if (sender.BarcodeDataAsText == null) return;
+            String code = sender.BarcodeDataAsText;
+
+            /*
+             * ### eliminato ###
+             *
+            // controllo se è già stato inserito
+            foreach (ListViewItem row in listBox.Items)
+            {
+                if ((row.Text == code) || (row.SubItems[1].Text == code))
+                {
+                    // incremento la qta
+                    row.Selected = true;
+                    if (MessageBox.Show("Incremento la qta?", "Già presente", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.No)
+                        return;
+                    row.SubItems[2].Text = Convert.ToString(Convert.ToInt16(row.SubItems[2].Text) + 1);
+                    // non inserisco una nuova riga
+                    return;
+                }
+            }
+             */
+
+            actNew(bcReader, null);
+
+            if (code.StartsWith("$"))
+            {
+                // codice interno
+                cbCodInterno.Checked = true;
+                txtCode.Text = code.Substring(1, 7);
+            }
+            else
+            {
+                // codice ean
+                cbCodInterno.Checked = false;
+                txtCode.Text = code;
+            }
+            txtQta.Text = "1";
+
+            actSave(bcReader, null);
+        }
+
+		/** Elimina tutte le righe dell'ordine */
+        private void actRemoveAll(object sender, EventArgs e)
+        {
+            DialogResult res;
+
+            res = MessageBox.Show("Confermi l'eliminazine completa?", "Elimina Tutto"
+                    , MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+            if (res == DialogResult.No)
+                return;
+
+            this.listBox.Items.Clear();
         }
     }
 }

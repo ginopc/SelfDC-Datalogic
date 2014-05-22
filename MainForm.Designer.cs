@@ -45,7 +45,7 @@
             this.menuItem5 = new System.Windows.Forms.MenuItem();
             this.mnuDelete = new System.Windows.Forms.MenuItem();
             this.menuItem8 = new System.Windows.Forms.MenuItem();
-            this.menuItem9 = new System.Windows.Forms.MenuItem();
+            this.mnuDeleteAll = new System.Windows.Forms.MenuItem();
             this.menuItem2 = new System.Windows.Forms.MenuItem();
             this.mnuInfo = new System.Windows.Forms.MenuItem();
             this.panEdit = new System.Windows.Forms.Panel();
@@ -60,6 +60,7 @@
             this.clBarCode = new System.Windows.Forms.ColumnHeader();
             this.clProductCode = new System.Windows.Forms.ColumnHeader();
             this.clQta = new System.Windows.Forms.ColumnHeader();
+            this.bcReader = new datalogic.datacapture.Laser();
             label3 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             this.panEdit.SuspendLayout();
@@ -68,7 +69,7 @@
             // 
             // label3
             // 
-            label3.Location = new System.Drawing.Point(138, 3);
+            label3.Location = new System.Drawing.Point(116, 5);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(45, 20);
             label3.Text = "Colli";
@@ -84,7 +85,7 @@
             // 
             this.statusBar.Location = new System.Drawing.Point(0, 295);
             this.statusBar.Name = "statusBar";
-            this.statusBar.Size = new System.Drawing.Size(314, 24);
+            this.statusBar.Size = new System.Drawing.Size(254, 24);
             this.statusBar.Text = "statusBar";
             // 
             // contextMenu
@@ -105,6 +106,7 @@
             // menuItem6
             // 
             this.menuItem6.Text = "Elimina Tutti";
+            this.menuItem6.Click += new System.EventHandler(this.actRemoveAll);
             // 
             // mainMenu
             // 
@@ -137,7 +139,7 @@
             // 
             this.menuItem5.MenuItems.Add(this.mnuDelete);
             this.menuItem5.MenuItems.Add(this.menuItem8);
-            this.menuItem5.MenuItems.Add(this.menuItem9);
+            this.menuItem5.MenuItems.Add(this.mnuDeleteAll);
             this.menuItem5.Text = "Edit";
             // 
             // mnuDelete
@@ -149,9 +151,10 @@
             // 
             this.menuItem8.Text = "-";
             // 
-            // menuItem9
+            // mnuDeleteAll
             // 
-            this.menuItem9.Text = "Elimina Tutti";
+            this.mnuDeleteAll.Text = "Elimina Tutti";
+            this.mnuDeleteAll.Click += new System.EventHandler(this.actRemoveAll);
             // 
             // menuItem2
             // 
@@ -174,15 +177,15 @@
             this.panEdit.Dock = System.Windows.Forms.DockStyle.Top;
             this.panEdit.Location = new System.Drawing.Point(0, 0);
             this.panEdit.Name = "panEdit";
-            this.panEdit.Size = new System.Drawing.Size(314, 86);
+            this.panEdit.Size = new System.Drawing.Size(254, 86);
             // 
             // cbCodInterno
             // 
-            this.cbCodInterno.Location = new System.Drawing.Point(202, 26);
+            this.cbCodInterno.Location = new System.Drawing.Point(157, 26);
             this.cbCodInterno.Name = "cbCodInterno";
             this.cbCodInterno.Size = new System.Drawing.Size(109, 20);
             this.cbCodInterno.TabIndex = 3;
-            this.cbCodInterno.Text = "Cod. Interno";
+            this.cbCodInterno.Text = "C. Interno";
             this.cbCodInterno.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbCodInterno_KeyPress);
             // 
             // panel1
@@ -193,14 +196,14 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 61);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(314, 25);
+            this.panel1.Size = new System.Drawing.Size(254, 25);
             // 
             // btnNew
             // 
             this.btnNew.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnNew.Location = new System.Drawing.Point(192, 0);
+            this.btnNew.Location = new System.Drawing.Point(154, 0);
             this.btnNew.Name = "btnNew";
-            this.btnNew.Size = new System.Drawing.Size(61, 25);
+            this.btnNew.Size = new System.Drawing.Size(50, 25);
             this.btnNew.TabIndex = 6;
             this.btnNew.Text = "Nuovo";
             this.btnNew.Click += new System.EventHandler(this.actNew);
@@ -210,7 +213,7 @@
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnCancel.Location = new System.Drawing.Point(0, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(110, 25);
+            this.btnCancel.Size = new System.Drawing.Size(100, 25);
             this.btnCancel.TabIndex = 5;
             this.btnCancel.Text = "Reset Campi";
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -218,27 +221,27 @@
             // btnSave
             // 
             this.btnSave.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSave.Location = new System.Drawing.Point(253, 0);
+            this.btnSave.Location = new System.Drawing.Point(204, 0);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(61, 25);
+            this.btnSave.Size = new System.Drawing.Size(50, 25);
             this.btnSave.TabIndex = 4;
             this.btnSave.Text = "Salva";
             this.btnSave.Click += new System.EventHandler(this.actSave);
             // 
             // txtQta
             // 
-            this.txtQta.Location = new System.Drawing.Point(138, 26);
+            this.txtQta.Location = new System.Drawing.Point(115, 26);
             this.txtQta.Name = "txtQta";
-            this.txtQta.Size = new System.Drawing.Size(58, 23);
+            this.txtQta.Size = new System.Drawing.Size(39, 23);
             this.txtQta.TabIndex = 1;
-            this.txtQta.Text = "123.12";
+            this.txtQta.Text = "123";
             this.txtQta.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtQta_KeyPress);
             // 
             // txtCode
             // 
             this.txtCode.Location = new System.Drawing.Point(4, 26);
             this.txtCode.Name = "txtCode";
-            this.txtCode.Size = new System.Drawing.Size(128, 23);
+            this.txtCode.Size = new System.Drawing.Size(96, 23);
             this.txtCode.TabIndex = 0;
             this.txtCode.Text = "123456789012";
             this.txtCode.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCode_KeyPress);
@@ -261,7 +264,7 @@
             this.listBox.Items.Add(listViewItem2);
             this.listBox.Location = new System.Drawing.Point(0, 86);
             this.listBox.Name = "listBox";
-            this.listBox.Size = new System.Drawing.Size(314, 209);
+            this.listBox.Size = new System.Drawing.Size(254, 209);
             this.listBox.TabIndex = 5;
             this.listBox.TabStop = false;
             this.listBox.View = System.Windows.Forms.View.Details;
@@ -270,24 +273,30 @@
             // clBarCode
             // 
             this.clBarCode.Text = "ean";
-            this.clBarCode.Width = 167;
+            this.clBarCode.Width = 100;
             // 
             // clProductCode
             // 
             this.clProductCode.Text = "codice";
-            this.clProductCode.Width = 74;
+            this.clProductCode.Width = 70;
             // 
             // clQta
             // 
             this.clQta.Text = "qta";
-            this.clQta.Width = 57;
+            this.clQta.Width = 45;
+            // 
+            // bcReader
+            // 
+            this.bcReader.ApplyDesignTimeConfiguration = false;
+            this.bcReader.ScanTimeout = 2500;
+            this.bcReader.GoodReadEvent += new datalogic.datacapture.ScannerEngine.LaserEventHandler(this.OnBarcodeScan);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(314, 319);
+            this.ClientSize = new System.Drawing.Size(254, 319);
             this.ContextMenu = this.contextMenu;
             this.ControlBox = false;
             this.Controls.Add(this.listBox);
@@ -321,7 +330,7 @@
         private System.Windows.Forms.MenuItem menuItem5;
         private System.Windows.Forms.MenuItem mnuDelete;
         private System.Windows.Forms.MenuItem menuItem8;
-        private System.Windows.Forms.MenuItem menuItem9;
+        private System.Windows.Forms.MenuItem mnuDeleteAll;
         private System.Windows.Forms.MenuItem menuItem1;
         private System.Windows.Forms.MenuItem mnuExport;
         private System.Windows.Forms.Panel panEdit;
@@ -341,6 +350,7 @@
         private System.Windows.Forms.CheckBox cbCodInterno;
         public System.Windows.Forms.ContextMenu contextMenu;
         private System.Windows.Forms.Button btnNew;
+        private datalogic.datacapture.Laser bcReader;
 
     }
 }
