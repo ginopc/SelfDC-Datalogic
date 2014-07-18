@@ -1,6 +1,8 @@
 Self DataColletor (SelfDC)
 ==========================
 
+##> Versione 0.0.3.3 del 22/05/2014 <##
+Riassociato evento alla voce "Elimina tutti" del menu.
 
 ##> Versione 0.0.3.2 del 13/05/2014 <##
 Il defaul nell'inserimento di un codice manuale è "codice interno". Precedentemente era Codice EAN.

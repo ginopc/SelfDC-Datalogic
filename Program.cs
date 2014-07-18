@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using SelfDC.Utils;
 
 namespace SelfDC
 {
@@ -11,7 +12,16 @@ namespace SelfDC
         [MTAThread]
         static void Main()
         {
-            Application.Run(new MainForm());
+            /* Load app settings */
+            ScsUtils.WriteLog("===========================");
+            ScsUtils.WriteLog("Caricamento impostazioni...");
+            Settings.AppCfgFileName = string.Format("{0}\\conf.txt", ScsUtils.GetAppPath());
+            Settings.LoadFromFile(Settings.AppCfgFileName);
+
+            /* show main form */
+            Application.Run(new MainMenu());
+
+            ScsUtils.WriteLog("Applicazione terminata correttamente");
         }
     }
 }

@@ -7,12 +7,12 @@ using System.Resources;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SmartDC")]
-[assembly: AssemblyDescription("Data Collector per PdV")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyDescription("Data Collector per Pda")]
+[assembly: AssemblyConfiguration("Datalogic")]
 [assembly: AssemblyCompany("Supermercati Consorziati Sardegna sc a rl")]
-[assembly: AssemblyProduct("SmartDC")]
+[assembly: AssemblyProduct("SmartDC Datalogic")]
 [assembly: AssemblyCopyright("Copyright © 2014 by M. Aru")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("SCS")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -30,7 +30,7 @@ using System.Resources;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.0.3.*")]
+[assembly: AssemblyVersion("0.0.4.*")]
 
 // Below attribute is to suppress FxCop warning "CA2232 : Microsoft.Usage : Add STAThreadAttribute to assembly"
 // as Device app does not support STA thread.
