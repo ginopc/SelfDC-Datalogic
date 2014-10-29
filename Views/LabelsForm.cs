@@ -83,7 +83,7 @@ namespace SelfDC
             int index = listBox.SelectedIndices[0];
             ListViewItem item = listBox.Items[index];
 
-            ScsUtils.WriteLog("In " + this.Name + ", modifica della riga " + item.Text);
+            ScsUtils.WriteLog(string.Format("In {0}, modifica della riga {1}", this.Name, item.Text));
 
             if (listBox.Items[index].Text == "")
             {
@@ -218,13 +218,25 @@ namespace SelfDC
             }
 
             DialogResult res = MessageBox.Show(
-                                    "Vuoi esportare l'ordine?", 
-                                    "Esporta Ordine", 
+                                    "Vuoi esportare il file?", 
+                                    "Esporta Etichette", 
                                     MessageBoxButtons.YesNo, 
                                     MessageBoxIcon.Question, 
                                     MessageBoxDefaultButton.Button1);
             if (res == DialogResult.No) return;
 
+            Labels labelList = new Labels();
+            foreach (ListViewItem item in listBox.Items)
+            {
+                labelList.Add(new LabelItem(item.Text, item.SubItems[1].Text, Convert.ToInt32(item.SubItems[2].Text)));
+            }
+            if (labelList.ToFile(Settings.EtichettaFilename) < 0)
+            {
+                return;
+            }
+
+
+            /* removed by M. Aru
             listaProdotti.Clear();
             foreach (ListViewItem item in listBox.Items)
             {
@@ -235,7 +247,9 @@ namespace SelfDC
             {
                 return;
             }
+             */ 
 
+            
             listBox.Items.Clear();
             listBox_SelectedIndexChanged(sender, e);
 
@@ -443,6 +457,7 @@ namespace SelfDC
         private void LabelsForm_Activated(object sender, EventArgs e)
         {
             ScsUtils.WriteLog("Maschera " + this.Name + " attivata");
+            this.bcReader = new datalogic.datacapture.Laser();
 #if DEVICE
             bcReader.Enabled = true;
 #else
@@ -457,6 +472,7 @@ namespace SelfDC
 #else
             bcReader.ScannerEnabled = false;
 #endif
+            this.bcReader = null;
         }
     }
 }

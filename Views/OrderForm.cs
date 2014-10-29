@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using SelfDC.Models;
 using SelfDC.Utils;
+using datalogic.datacapture;
 
 namespace SelfDC
 {
@@ -33,11 +34,13 @@ namespace SelfDC
 
             // server per il debug sull'emulatore
             if (System.Environment.OSVersion.Platform.ToString() == "WinCE")
+            {
 #if DEVICE
                 bcReader.Enabled = true;
 #else
                 bcReader.ScannerEnabled = true;
 #endif
+            }
         }
 
 
@@ -81,7 +84,7 @@ namespace SelfDC
             int index = listBox.SelectedIndices[0];
             ListViewItem item = listBox.Items[index];
 
-            ScsUtils.WriteLog("In " + this.Name + ", modifica della riga " + item.Text);
+            ScsUtils.WriteLog(string.Format("In {0} + , modifica della riga {1}",  this.Name, index.ToString()));
 
             if (item.Text == "")
             {
@@ -182,9 +185,10 @@ namespace SelfDC
         /** Esporta la lista in un file */
         private void actExport(object sender, EventArgs e)
         {
-            ScsUtils.WriteLog("In " + this.Name + ", esportazione dati su file" + Settings.OrdineFileName);
+            ScsUtils.WriteLog(string.Format("In {0}, esportazione dati su file {1}", this.Name, Settings.OrdineFileName));
 
-           if (listBox.Items.Count == 0)
+            // check if there is some line
+            if (listBox.Items.Count == 0)
             {
                 MessageBox.Show(
                     "Nessun dato da esportare"
@@ -195,6 +199,7 @@ namespace SelfDC
                 return;
             }
 
+            // User Confirm?
             DialogResult res = MessageBox.Show(
                                     "Vuoi esportare l'ordine?", 
                                     "Esporta Ordine", 
@@ -203,6 +208,18 @@ namespace SelfDC
                                     MessageBoxDefaultButton.Button1);
             if (res == DialogResult.No) return;
 
+            Order ordine = new Order();
+            foreach (ListViewItem item in listBox.Items)
+            {
+                ordine.Add(new OrderItem(item.Text, item.SubItems[1].Text, Convert.ToInt32(item.SubItems[2].Text)));
+            }
+            if (ordine.ToFile(Settings.OrdineFileName) < 0)
+            {
+                return;
+            }
+
+
+            /*
             listaProdotti.Clear();
             foreach (ListViewItem item in listBox.Items)
             {
@@ -213,6 +230,8 @@ namespace SelfDC
             {
                 return;
             }
+             */
+ 
             listBox.Items.Clear();
             listBox_SelectedIndexChanged(sender, e);
             listaProdotti.Clear();
@@ -383,9 +402,6 @@ namespace SelfDC
         /** dopo conferma chiusura */
         private void OrderForm_Closed(object sender, EventArgs e)
         {
-            // Salvo le impostazioni
-            Settings.SaveToFile(Settings.AppCfgFileName);
-
             // TODO: se esiste un ordine in fase di compilazione lo esporto su un file temporaneo
 
             // Prima di chiudere disabilito lo scanner
@@ -429,6 +445,7 @@ namespace SelfDC
 #else
             this.bcReader.ScannerEnabled = false;
 #endif
+            // this.bcReader = null;
         }
     }
 }

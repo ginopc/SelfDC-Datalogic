@@ -6,11 +6,11 @@ using System.Resources;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SmartDC")]
+[assembly: AssemblyTitle("SelfDC")]
 [assembly: AssemblyDescription("Data Collector per Pda")]
 [assembly: AssemblyConfiguration("Datalogic")]
 [assembly: AssemblyCompany("Supermercati Consorziati Sardegna sc a rl")]
-[assembly: AssemblyProduct("SmartDC Datalogic")]
+[assembly: AssemblyProduct("SelfDC Datalogic")]
 [assembly: AssemblyCopyright("Copyright © 2014 by M. Aru")]
 [assembly: AssemblyTrademark("SCS")]
 [assembly: AssemblyCulture("")]

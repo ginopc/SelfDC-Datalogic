@@ -114,5 +114,9 @@ namespace SelfDC
             ScsUtils.WriteLog("Caricamento maschera " + this.Name);
         }
 
+        private void MainMenu_Closed(object sender, EventArgs e)
+        {
+        }
+
     }
 }

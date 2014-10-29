@@ -1,4 +1,5 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -20,6 +21,8 @@
     </FormFactorID>
     <StartupObject>SelfDC.Program</StartupObject>
     <ApplicationIcon>Selfy.ico</ApplicationIcon>
+    <Description>Data Collector for Datalogic PDA</Description>
+    <DeployDirPrefix>%25CSIDL_PROGRAM_FILES%25</DeployDirPrefix>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,20 +57,17 @@
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Labels.cs" />
     <Compile Include="Views\LabelsForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\LabelsForm.designer.cs">
       <DependentUpon>LabelsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Device.cs">
     </Compile>
     <Compile Include="Models\LabelItem.cs" />
     <Compile Include="Models\Order.cs" />
@@ -103,6 +103,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Selfy.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DeviceLib\DeviceLib.csproj">
+      <Project>{B47E34DD-6228-4567-BBC8-864FC8C122DF}</Project>
+      <Name>DeviceLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>

@@ -1,6 +1,9 @@
 Self DataColletor (SelfDC)
 ==========================
 
+##> Versione 0.0.5 del 29/10/2014 <##
+Corretta dicitura "Esporta Ordine" su maschera etichette
+
 
 ##> Versione 0.0.4 del 26/06/2014 <##
 Aggiunta maschera LabelsForm per il collezionamento dei dati di stampa etichetta (es.: frontaline scaffale)

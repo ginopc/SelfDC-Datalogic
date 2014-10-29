@@ -82,7 +82,7 @@ namespace SelfDC.Utils
         public static void WriteLog(string logMsg)
         {
             StreamWriter sw = new StreamWriter(GetAppPath() + "\\" + GetAppAssemblyName() + "_log.txt", true);
-            sw.WriteLine("{0:yyyy-MM-dd hh:mm:ss}: {1}", DateTime.Now, logMsg);
+            sw.WriteLine("{0:yyyy-MM-dd HH:mm:ss}: {1}", DateTime.Now, logMsg);
             sw.Close();
         }
 

@@ -60,7 +60,7 @@ namespace SelfDC
             this.clBarCode = new System.Windows.Forms.ColumnHeader();
             this.clProductCode = new System.Windows.Forms.ColumnHeader();
             this.clQta = new System.Windows.Forms.ColumnHeader();
-#if DEVICE
+#if (DEVICE)
             this.bcReader = new SelfDC.Models.Device();
 #else
             this.bcReader = new datalogic.datacapture.Laser();

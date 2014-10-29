@@ -6,12 +6,17 @@ using SelfDC.Utils;
 
 namespace SelfDC.Models
 {
-    public class Order
+    public class Labels
     {
         /// <summary>
         /// Lista degli elementi dell'ordine
         /// </summary>
-        private List<OrderItem> Items;
+        private List<LabelItem> Items;
+
+        public Labels()
+        {
+            this.Items = new List<LabelItem>();
+        }
 
         public string Customer
         {
@@ -27,7 +32,7 @@ namespace SelfDC.Models
         /// <summary>
         /// Add new item into order
         /// </summary>
-        public void Add(OrderItem item)
+        public void Add(LabelItem item)
         {
             Items.Add(item);
         }
@@ -35,7 +40,7 @@ namespace SelfDC.Models
         /// <summary>
         /// Remove item from order
         /// </summary>
-        public void Remove(OrderItem item)
+        public void Remove(LabelItem item)
         {
             Items.Remove(item);
         }
@@ -43,9 +48,9 @@ namespace SelfDC.Models
         /// <summary>
         /// Update item into order
         /// </summary>
-        public void Update(OrderItem item)
+        public void Update(LabelItem item)
         {
-            foreach (OrderItem currItem in this.Items)
+            foreach (LabelItem currItem in this.Items)
             {
                 if (currItem.productCode == item.productCode)
                 {
@@ -78,7 +83,7 @@ namespace SelfDC.Models
             // Esporta i dati
             string line;
 
-            foreach (OrderItem item in this.Items)
+            foreach (LabelItem item in this.Items)
             {
                 line = string.Format("{0};{1};{2};{3}"
                         , Settings.CodiceCliente
