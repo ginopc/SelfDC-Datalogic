@@ -3,7 +3,7 @@ A complete application for WinCE Portable Digital Assistant (PdA).
 Follows some release note.
 
 ## Version 0.0.5 (2014-10-29)
-Modified "Esporta Ordine" on "Etichette" form
+Modified string "Esporta Ordine" on "Etichette" form
 
 ## Version 0.0.4 (2014-06-26)
 New LabelForm for labels print data collection (es.: frontaline scaffale)
